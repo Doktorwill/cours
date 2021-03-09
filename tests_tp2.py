@@ -124,11 +124,30 @@ def test_from_yaml():
     stream = io.StringIO(text)
     l = yaml.load(stream)
     
-    b1 = Box(is_open=True, capacity=3)
     b1_yaml = Box.from_yaml(l[0])
-
-    b2 = Box(is_open=False, capacity=5)
     b2_yaml = Box.from_yaml(l[1])
 
-    assert b1 == b1.yaml
-    assert b2 == b2.yaml
+    assert b1_yaml.capacity() == 3
+    assert b1_yaml.is_open()
+    assert b2_yaml.capacity() == 5
+    assert not b2_yaml.is_open()
+
+def test_from_yaml_thing():
+    text="""
+    - volume: 5
+      name: bidule
+    - volume: 4
+      name: bidule1
+    """
+
+    stream = io.StringIO(text)
+    l = yaml.load(stream)
+    
+    t1_yaml = Thing.from_yaml(l[0])
+    t2_yaml = Thing.from_yaml(l[1])
+
+    assert t1_yaml.volume == 5
+    assert t1_yaml.has_name("bidule")
+    
+    assert t2_yaml.volume == 4
+    assert t2_yaml.has_name("bidule1")
