@@ -1,17 +1,4 @@
-def list_from_yaml(data):
-    ans = []
-    for d in data:
-        if d["type"] == "Box":
-            ans.append(Box.from_yaml(d))
-        elif d["type"] == "Thing":
-            ans.append(Thing.from_yaml(d))
-    return ans
-
 class Box:
-
-    @staticmethod
-    def from_yaml(data):
-        return Box(is_open=data["is_open"], capacity=data["capacity"])
     
     def __init__(self, is_open=True, capacity=None):
         self._contents = []
@@ -71,10 +58,6 @@ class Box:
     
 class Thing:
 
-    @staticmethod
-    def from_yaml(data):
-        return Thing(v = data["volume"], name=data["name"])
-    
     def __init__(self, v, name=None):
         self._volume = v
         self._name = name
