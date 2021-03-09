@@ -1,3 +1,12 @@
+def list_from_yaml(data):
+    ans = []
+    for d in data:
+        if d["type"] == "Box":
+            ans.append(Box.from_yaml(d))
+        elif d["type"] == "Thing":
+            ans.append(Thing.from_yaml(d))
+    return ans
+
 class Box:
 
     @staticmethod
