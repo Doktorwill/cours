@@ -1,4 +1,9 @@
 class Box:
+
+    @staticmethod
+    def from_yaml(data):
+        return Box(is_open=data["is_open"], capacity=data["capacity"])
+    
     def __init__(self, is_open=True, capacity=None):
         self._contents = []
         self._status = is_open
