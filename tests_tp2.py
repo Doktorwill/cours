@@ -1,6 +1,7 @@
 from tp2 import *
 import yaml
 import io
+
 def test_box_create():
     b = Box()
 
@@ -114,3 +115,21 @@ def test_find():
     b.close()
     assert b.find("bidule") is None
  
+def test_box_from_yaml():
+    text="""
+    - is_open: true
+      capacity: 3
+    - is_open: false
+      capacity: 5
+    """
+
+    stream = io.StringIO(text)
+    l = yaml.load(stream)
+
+    b1 = Box.from_yaml(l[0])
+    b2 = Box.from_yaml(l[1])
+
+    assert b1.is_open()
+    assert b1.capacity() == 3
+    assert not b2.is_open()
+    assert b2.capacity() == 5
