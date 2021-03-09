@@ -61,6 +61,11 @@ class Box:
             return None
     
 class Thing:
+
+    @staticmethod
+    def from_yaml(data):
+        return Thing(v = data["volume"], name=data["name"])
+    
     def __init__(self, v, name=None):
         self._volume = v
         self._name = name
