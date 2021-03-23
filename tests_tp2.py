@@ -133,3 +133,15 @@ def test_box_from_yaml():
     assert b1.capacity() == 3
     assert not b2.is_open()
     assert b2.capacity() == 5
+
+def test_ouvrir_objet():
+    b=Box()
+    b.close()
+    b.add("ceci")
+    b.add("cela")
+    b.set_key("clef")
+    b.open_with("bracelet")
+    assert b.action_look() == "la boite est fermee"
+
+    b.open_with("clef")
+    assert b.action_look() == "la boite contient : ceci, cela"

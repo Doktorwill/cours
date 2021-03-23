@@ -1,9 +1,22 @@
+import io
+import yaml
+
+def list_from_yaml(data):
+    ans = []
+    for d in data:
+        if d["type"] == "Box":
+            ans.append(Box.from_yaml(d))
+        elif d["type"] == "Thing":
+            ans.append(Thing.from_yaml(d))
+    return ans
+
 class Box:
     
     def __init__(self, is_open=True, capacity=None):
         self._contents = []
         self._status = is_open
         self._capacity = capacity
+        self._key = None
 
     def add(self,truc):
         self._contents.append(truc)
@@ -55,6 +68,23 @@ class Box:
             return None
         else:
             return None
+
+    @staticmethod
+    def from_yaml(data):
+        is_open = data.get("is_open", False)
+        capacity = data.get("capacity", None)
+        return Box(is_open, capacity)
+    
+    def set_key(self, key):
+        self._key = key
+
+    def open_with(self, key):
+        if not self.is_open():
+            if self._key == key:
+                self.open()
+    
+
+
     
 class Thing:
 
@@ -73,3 +103,9 @@ class Thing:
     
     def volume(self):
         return self._volume
+
+    @staticmethod
+    def from_yaml(data):
+        v = data.get("volume", None)
+        name = data.get("name", None)
+        return Thing(v, name)
